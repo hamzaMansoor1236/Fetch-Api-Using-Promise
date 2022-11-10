@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Data fetch using async await function</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+    
+  </head>
+  <body onload="asyncFun()">
+    <div id="mainDiv" class="container">
+      <h1 style="color: #fff">Loading data Via Async Await</h1>
+    </div>
+  </body>
+</html>
+
+<script>
+  //function using fetch  to get data from api
+  function dataFetch() {
+    fetch("https://jsonplaceholder.typicode.com/users")
+      .then((response) => response.json())
+      .then((data) => {
+        //concatination of HTML
+        document.getElementById("mainDiv").innerHTML += ` 
+            <table id="table"  >
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Full Address</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>    
+            </table>`;
+
+        //populating rows of the table with data from API
+        data.forEach((element) => {
+          document.getElementById("table").innerHTML += `<tr>
+                 <td>${element.id}</td>
+                 <td>${element.name}</td>
+                 <td>${element.email}</td>
+                 <td>${
+                   element.address.street +
+                   "  " +
+                   element.address.city +
+                   "   " +
+                   element.address.zipcode
+                 }</td>
+             </tr>`;
+          /////////////////////////////////////////////////
+        });
+      });
+  }
+
+  // Async function 
+  async function asyncFun() {
+    await dataFetch();
+  }
+</script>
